@@ -1,39 +1,43 @@
 import { Component } from "react/cjs/react.development";
-import { Statistics } from "./statistics/Statistics";
-import { FeedbackOptions } from "./statistics/FeedbackOptions";
-import { Container } from "./statistics/FeedbackStat.styled";
-import { Section } from "./statistics/Section";
-import { Notification } from "./statistics/Notification";
+import { nanoid } from "nanoid";
+import { Container } from "./phonebook/Phonebook.styled"
 
 export class App extends Component {
-      state = {
-        good: 0,
-        neutral: 0,
-        bad: 0
-    };
+  state = {
+  contacts: [],
+  name: ''
+  }
+  
+  onChangeName = (evt) => {
+    this.setState({
+      name: evt.currentTarget.value
+    })
+  }
 
-  leaveFeedback = (name) => {
-    this.setState(prevState => ({ [name]: (prevState[name] + 1) }))
+  onAddContact = (name) => {
+    this.setState(prevState => {
+      
+    })
   }
-  
+
   render() {
-    const { good, neutral, bad } = this.state;
-    const countTotalFeedback = Object.values(this.state).reduce((sum, current) => sum + current, 0);
-    const countPositiveFeedbackPercentage = Math.round(good / countTotalFeedback * 100);
-return (
-    <Container>
-      <Section title="Please leave feedback">
-    <FeedbackOptions options={this.state} onLeaveFeedback={this.leaveFeedback}/>
-      </Section>
-      <Section title="Statistics">
-      {countTotalFeedback ? <Statistics
-        good={good} neutral={neutral} bad={bad} total={countTotalFeedback} positivePercentage={countPositiveFeedbackPercentage}
-      />
-        :  <Notification message="There is no feedback"/>
-      }
-    </Section>
-      </Container>
-  );
+    const { name } = this.state;
+    return (
+      <Container>
+        <p>Name</p>
+        <form action="">
+          <input
+            onChange={this.onChangeName}
+            value={name}
+        type="text"
+        name="name"
+        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        required
+          />
+          <button type="button" onClick={() => this.onAddContact(name)}>Add contact</button>
+          </form>
+        </Container>
+    )
   }
-  
-};
+}
