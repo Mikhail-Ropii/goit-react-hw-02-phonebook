@@ -2,8 +2,6 @@ import styled from '@emotion/styled';
 import { Button, Label } from './ContactForm.styled';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const FormStyle = styled(Form)`
   display: flex;
@@ -29,8 +27,6 @@ export const ContactForm = ({ onHandleSubmit }) => {
       .positive('Incorrect number')
       .integer('Incorrect number'),
   });
-
-  const notify = () => toast('Wow so easy!');
 
   return (
     <Formik
