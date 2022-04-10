@@ -1,5 +1,19 @@
+import styled from '@emotion/styled';
+import { Button, Label } from './ContactForm.styled';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const FormStyle = styled(Form)`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ErrorMessageStyle = styled(ErrorMessage)`
+  position: absolute;
+  top: 20px;
+`;
 
 export const ContactForm = ({ onHandleSubmit }) => {
   const initialValues = {
@@ -16,25 +30,27 @@ export const ContactForm = ({ onHandleSubmit }) => {
       .integer('Incorrect number'),
   });
 
+  const notify = () => toast('Wow so easy!');
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={schema}
       onSubmit={onHandleSubmit}
     >
-      <Form>
-        <label htmlFor="name">
+      <FormStyle>
+        <Label htmlFor="name">
           Name
-          <ErrorMessage name="name" component="div" />
+          <ErrorMessageStyle name="name" component="div" />
           <Field type="text" name="name" id="name" />
-        </label>
-        <label htmlFor="number">
+        </Label>
+        <Label htmlFor="number">
           Number
-          <ErrorMessage name="number" component="div" />
-          <Field type="text" name="number" />
-        </label>
-        <button type="submit">Add contact</button>
-      </Form>
+          <ErrorMessageStyle name="number" component="div" />
+          <Field type="text" name="number" id="number" />
+        </Label>
+        <Button type="submit">Add contact</Button>
+      </FormStyle>
     </Formik>
   );
 };

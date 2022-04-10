@@ -1,12 +1,16 @@
 import { ContactItem } from '../contactItem/ContactItem';
+import { Button, BookItem } from './ContactList.styled';
 
-export const ContactList = ({ allContacts }) => {
+export const ContactList = ({ contacts, handleDeleteContact }) => {
   return (
     <ul>
-      {allContacts.map(({ id, name, number }) => (
-        <li key={id}>
+      {contacts.map(({ id, name, number }) => (
+        <BookItem key={id}>
           <ContactItem name={name} number={number} />
-        </li>
+          <Button type="button" onClick={() => handleDeleteContact(id)}>
+            Delete
+          </Button>
+        </BookItem>
       ))}
     </ul>
   );

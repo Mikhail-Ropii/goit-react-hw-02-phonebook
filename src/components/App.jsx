@@ -1,6 +1,6 @@
 import { Component } from 'react/cjs/react.development';
 import { nanoid } from 'nanoid';
-import { Container, Title, ContcTitle } from './Phonebook.styled';
+import { Container, Title, ContcTitle, Section } from './Phonebook.styled';
 import { ContactForm } from './contactForm/ContactForm';
 import { Filter } from './filter/Filter';
 import { ContactList } from './contactList/ContactList';
@@ -17,6 +17,10 @@ export class App extends Component {
   };
 
   handleSubmit = (values, { resetForm }) => {
+    if (this.state.contacts.find(contact => contact.name === values.name)) {
+      alert(`${values.name} is already in contacts`);
+      return;
+    }
     const newContact = {
       id: nanoid(5),
       name: values.name,
@@ -26,34 +30,42 @@ export class App extends Component {
       contacts: [...prevState.contacts, newContact],
     }));
     resetForm();
-    console.log(this.state.contacts);
   };
-
-  results = '';
 
   onChangeFilter = evt => {
     this.setState({
       filter: evt.currentTarget.value,
     });
-    const allContacts = this.state.contacts;
-    const filterValue = this.state.filter;
-    this.results = allContacts.filter(contact => {
-      return contact.name.toLowerCase().startsWith(filterValue.toLowerCase());
-    });
+  };
+
+  findContact = () => {
+    const { filter, contacts } = this.state;
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().trim().includes(filter.toLowerCase().trim())
+    );
+  };
+
+  handleDeleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
   };
 
   render() {
+    const { filter } = this.state;
+    const results = this.findContact();
     return (
       <Container>
-        <Title>Phonebook</Title>
-        <ContactForm onHandleSubmit={this.handleSubmit} />
-        <ContcTitle>Contacts</ContcTitle>
-        <Filter
-          filter={this.state.filter}
-          onChangeFilter={this.onChangeFilter}
-        />
-        <ContactList allContacts={this.state.contacts} />
-        {this.results !== '' && <ContactList allContacts={this.results} />}
+        <Section>
+          <Title>Phonebook</Title>
+          <ContactForm onHandleSubmit={this.handleSubmit} />
+          <ContcTitle>Contacts</ContcTitle>
+          <Filter filter={filter} onChangeFilter={this.onChangeFilter} />
+          <ContactList
+            contacts={results}
+            handleDeleteContact={this.handleDeleteContact}
+          />
+        </Section>
       </Container>
     );
   }
