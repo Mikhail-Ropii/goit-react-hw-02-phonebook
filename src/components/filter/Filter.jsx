@@ -1,3 +1,5 @@
+import propTypes from 'prop-types';
+
 export const Filter = ({ filter, onChangeFilter }) => {
   return (
     <form>
@@ -7,4 +9,8 @@ export const Filter = ({ filter, onChangeFilter }) => {
       </label>
     </form>
   );
+};
+
+Filter.propTypes = {
+  filter: propTypes.string,
 };

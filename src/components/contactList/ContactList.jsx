@@ -1,5 +1,6 @@
 import { ContactItem } from '../contactItem/ContactItem';
 import { Button, BookItem } from './ContactList.styled';
+import propTypes from 'prop-types';
 
 export const ContactList = ({ contacts, handleDeleteContact }) => {
   return (
@@ -14,4 +15,8 @@ export const ContactList = ({ contacts, handleDeleteContact }) => {
       ))}
     </ul>
   );
+};
+
+ContactList.propTypes = {
+  contacts: propTypes.arrayOf(propTypes.object),
 };

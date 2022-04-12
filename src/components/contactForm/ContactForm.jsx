@@ -9,9 +9,12 @@ const FormStyle = styled(Form)`
 `;
 
 const ErrorMessageStyle = styled(ErrorMessage)`
-  position: absolute;
-  top: 20px;
+  color: red;
 `;
+
+const phoneValid =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const nameValid = /[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)/;
 
 export const ContactForm = ({ onHandleSubmit }) => {
   const initialValues = {
@@ -20,12 +23,20 @@ export const ContactForm = ({ onHandleSubmit }) => {
   };
 
   const schema = yup.object().shape({
-    name: yup.string('Incorrect name').required('Type your name'),
+    name: yup
+      .string()
+      .required('Type name')
+      .matches(
+        nameValid,
+        'Name may contain only letters, apostrophe, dash and spaces'
+      ),
     number: yup
-      .number('Incorrect number')
-      .required('Type your number')
-      .positive('Incorrect number')
-      .integer('Incorrect number'),
+      .string()
+      .required('Type number')
+      .matches(
+        phoneValid,
+        'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
+      ),
   });
 
   return (
