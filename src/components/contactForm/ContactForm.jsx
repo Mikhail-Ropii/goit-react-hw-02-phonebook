@@ -13,7 +13,7 @@ const ErrorMessageStyle = styled(ErrorMessage)`
 `;
 
 const phoneValid =
-  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
 const nameValid = /[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)/;
 
 export const ContactForm = ({ onHandleSubmit }) => {
@@ -54,7 +54,7 @@ export const ContactForm = ({ onHandleSubmit }) => {
         <Label htmlFor="number">
           Number
           <ErrorMessageStyle name="number" component="div" />
-          <Field type="text" name="number" id="number" />
+          <Field type="tel" name="number" id="number" />
         </Label>
         <Button type="submit">Add contact</Button>
       </FormStyle>

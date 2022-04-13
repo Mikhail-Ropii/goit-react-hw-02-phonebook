@@ -17,7 +17,12 @@ export class App extends Component {
   };
 
   handleSubmit = (values, { resetForm }) => {
-    if (this.state.contacts.find(contact => contact.name === values.name)) {
+    if (
+      this.state.contacts.find(
+        contact =>
+          contact.name.toLowerCase().trim() === values.name.toLowerCase().trim()
+      )
+    ) {
       alert(`${values.name} is already in contacts`);
       return;
     }
